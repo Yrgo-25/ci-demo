@@ -33,7 +33,26 @@ fi
 # Check the formatting if --check is given, otherwise format the files in place.
 if [[ "${1:-}" == "--check" ]]
 then
+    # clang-format reports every violation and exits non-zero, so reaching the summary below
+    # means that every file was already correctly formatted.
     clang-format --dry-run --Werror "${FILES[@]}"
+    echo "Checked ${#FILES[@]} file(s), all correctly formatted."
 else
-    clang-format -i "${FILES[@]}"
+    # Format one file at a time, so that the files actually changed can be reported. Always print
+    # a summary, also when nothing needed changing.
+    COUNT=0
+
+    for FILE in "${FILES[@]}"
+    do
+        BEFORE="$(md5sum "$FILE")"
+        clang-format -i "$FILE"
+        AFTER="$(md5sum "$FILE")"
+
+        if [[ "$BEFORE" != "$AFTER" ]]
+        then
+            echo "Formatted: $FILE"
+            COUNT=$((COUNT + 1))
+        fi
+    done
+    echo "Formatted $COUNT of ${#FILES[@]} file(s)."
 fi
