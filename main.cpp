@@ -5,7 +5,7 @@
 
 /**
  * @brief Application entry point.
- * 
+ *
  * @return 0 on termination of the program.
  */
 int main()
