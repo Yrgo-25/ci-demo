@@ -1,0 +1,18 @@
+name: CI
+
+# Specify when to run the pipeline.
+on:
+  push:
+  pull_request:
+
+# Specify jobs to run.
+jobs:
+  firmware-build:
+    name: Build ESP32 firmware
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+      - name: Build firmware
+        run: make build
+
