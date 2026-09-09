@@ -15,4 +15,6 @@ jobs:
         uses: actions/checkout@v4
       - name: Build firmware
         run: make build
+      - name: Run firmware
+        run: make run
 
