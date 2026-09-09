@@ -20,16 +20,13 @@ void tick(Interface& timer, const std::uint32_t count) noexcept
 }
 
 // -----------------------------------------------------------------------------
-[[nodiscard]] std::uint32_t ticksPerTimeout(const Interface& timer) noexcept 
-{ 
+[[nodiscard]] std::uint32_t ticksPerTimeout(const Interface& timer) noexcept
+{
     return timer.timeout_ms();
 }
 
 // -----------------------------------------------------------------------------
-void expectPositiveTimeout(const Interface& timer)
-{ 
-    EXPECT_TRUE(0U < timer.timeout_ms());
-}
+void expectPositiveTimeout(const Interface& timer) { EXPECT_TRUE(0U < timer.timeout_ms()); }
 } // namespace
 
 // -----------------------------------------------------------------------------
@@ -191,7 +188,7 @@ void testStopKeepsReachedTimeout(Interface& timer)
 // -----------------------------------------------------------------------------
 void testExtraTicksKeepTimeout(Interface& timer)
 {
-    // The number of ticks that wraps a 16-bit elapsed time back to zero. 
+    // The number of ticks that wraps a 16-bit elapsed time back to zero.
     constexpr std::uint32_t counterWrapTicks{65536U};
 
     timer.start();
