@@ -1,2 +1,9 @@
-firmware
+# Ignore everything without an extension, then selectively allow files and directories.
+*
+!*.*
+!*/
 
+# Don't ignore makefiles and license files.
+!makefile
+!Makefile
+!LICENSE
