@@ -8,7 +8,7 @@ CXX_COMPILER := g++
 CXX_FLAGS := -Wall -Werror -std=c++17 -Iinclude
 
 # Source files.
-SRC_FILES := main.cpp \
+SRC_FILES := source/main.cpp \
 
 # Build and run the target by default.
 default: build run
