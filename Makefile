@@ -24,3 +24,11 @@ run:
 # Clean the target.
 clean:
 	@rm -f $(TARGET)
+
+# Analyze format on all .cpp and .h files in the repo.
+check-format:
+	@clang-format --dry-run --Werror $$(find . -name '*.cpp') $$(find . -name '*.h')
+
+# Format all .cpp and .h files in the repo.
+format:
+	@clang-format -i $$(find . -name '*.cpp') $$(find . -name '*.h')

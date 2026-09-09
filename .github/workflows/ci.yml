@@ -12,7 +12,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
       - name: Build firmware
         run: make build
       - name: Run firmware
@@ -29,4 +29,12 @@ jobs:
           if-no-files-found: error
           retention-days: 3
 
+  analyze-format:
+    name: Check format with clang-format
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v5
+      - name: Run analysis
+        run: make check-format
 
