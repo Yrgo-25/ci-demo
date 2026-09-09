@@ -1,34 +1,35 @@
 # Application target.
 TARGET := firmware
 
-# C++ compiler.
-CXX_COMPILER := g++
-
-# C++ compiler flags.
-CXX_FLAGS := -Wall -Werror -std=c++17 -Iinclude
-
-# Source files.
-SRC_FILES := source/main.cpp \
+# Test directory, which holds the test suite and its own makefile.
+TEST_DIR := test
 
 # Build and run the target by default.
 default: build run
 
 # Build the target.
 build:
-	@$(CXX_COMPILER) $(SRC_FILES) -o $(TARGET) $(CXX_FLAGS)
+	@ci/build.sh
 
 # Run the target.
 run:
 	@./$(TARGET)
 
-# Clean the target.
+# Build and run the unit tests.
+unit-test:
+	@ci/unit_test.sh
+
+# Analyze format on all C++ files in the repo, without changing anything.
+check-format:
+	@ci/format.sh --check
+
+# Format all C++ files in the repo.
+format:
+	@ci/format.sh
+
+# Clean the target, the test suite and the test framework.
 clean:
 	@rm -f $(TARGET)
+	@$(MAKE) -C $(TEST_DIR) clean
 
-# Analyze format on all .cpp and .h files in the repo.
-check-format:
-	@clang-format --dry-run --Werror $$(find . -name '*.cpp') $$(find . -name '*.h')
-
-# Format all .cpp and .h files in the repo.
-format:
-	@clang-format -i $$(find . -name '*.cpp') $$(find . -name '*.h')
+.PHONY: default build run unit-test check-format format clean
